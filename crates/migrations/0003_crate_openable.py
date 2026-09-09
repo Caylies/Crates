@@ -4,15 +4,12 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
-    dependencies = [
-        ('crates', '0002_auto_20260907_0820'),
-    ]
+    dependencies = [("crates", "0002_auto_20260907_0820")]
 
     operations = [
         migrations.AddField(
-            model_name='crate',
-            name='openable',
-            field=models.BooleanField(default=True, help_text='Whether this crate can be opened.'),
-        ),
+            model_name="crate",
+            name="openable",
+            field=models.BooleanField(default=True, help_text="Whether this crate can be opened."),
+        )
     ]
