@@ -33,7 +33,9 @@ class MenuContainer(discord.ui.Container):
 class OpenButton(discord.ui.Button):
     def __init__(self, crate_instance: CrateInstance):
         super().__init__(label="Open")
+
         self.crate_instance = crate_instance
+        self.disabled = not crate_instance.crate.openable
 
     async def callback(self, interaction: discord.Interaction["BallsDexBot"]):
         await interaction.response.defer()

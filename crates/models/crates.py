@@ -17,6 +17,9 @@ class Crate(models.Model):
         help_text="The minimum amount of countryballs that will be given.", validators=(MinValueValidator(1),)
     )
     amount_max = models.PositiveIntegerField(help_text="The maximum amount of countryballs that will be given.")
+    openable = models.BooleanField(
+        default=True, help_text="Whether this crate can be opened."
+    )
     pools = models.ManyToManyField(Pool, blank=True, related_name="crates")
 
     class Meta:
