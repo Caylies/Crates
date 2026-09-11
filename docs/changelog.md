@@ -8,7 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
-- An openable field for toggling whether a crate can be opened.
+- Added an openable field for toggling whether a crate can be opened.
+
+### Changed
+
+- Improved README file layout.
 
 ## [0.1.0] - 2026-09-07
 
