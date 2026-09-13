@@ -34,7 +34,7 @@ class OpenButton(discord.ui.Button):
     def __init__(self, crate_instance: CrateInstance):
         super().__init__(label="Open")
 
-        self.crate_instance = crate_instance
+        self.crate_instance_id = crate_instance.pk
         self.disabled = not crate_instance.crate.openable
 
     async def callback(self, interaction: discord.Interaction["BallsDexBot"]):
@@ -42,17 +42,31 @@ class OpenButton(discord.ui.Button):
 
         settings = await get_settings()
         player, _ = await Player.objects.aget_or_create(discord_id=interaction.user.id)
-        crate_instance = await CrateInstance.objects.select_related("player", "crate").aget(pk=self.crate_instance.pk)
 
-        if crate_instance.player != player:
+        try:
+            crate_instance = await CrateInstance.objects.select_related("player", "crate").aget(
+                pk=self.crate_instance_id
+            )
+        except CrateInstance.DoesNotExist:
+            crate_instance = None
+
+        if not crate_instance or crate_instance.player != player:
             await interaction.followup.send(f"This {settings.crate_name} no longer belongs to you.")
+
+            return
+
+        deleted_count, _ = await CrateInstance.objects.filter(pk=self.crate_instance_id, player=player).adelete()
+
+        if deleted_count == 0:
+            await interaction.followup.send(f"This {settings.crate_name} has already been opened.")
+
             return
 
         instances = await open_crate(crate_instance, player)
+
         await interaction.followup.send(
             view=await CrateResultView.build(interaction.client, interaction.user, crate_instance, instances)
         )
-        await crate_instance.adelete()
 
         with suppress(discord.HTTPException, discord.NotFound):
             await interaction.edit_original_response(view=await CrateListView.build(interaction.user))

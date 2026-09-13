@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Added an openable field for toggling whether a crate can be opened.
 
+### Fixed
+
+- Fixed crate open validation.
+
 ### Changed
 
 - Improved README file layout.
