@@ -16,6 +16,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
     - Added the `reloadcrates` text command for synchronizing pool commands.
 - Added a new pool claiming view rather than using a claim message.
 - Added documentation for pools.
+- Added emoji support for crates.
+- Added the ability to edit a crate's `openable` field from the admin panel's crate list.
+
+### Changed
+
+- Organized crate forum fields.
 
 ### Removed
 
