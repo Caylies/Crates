@@ -45,11 +45,7 @@ class Crates(commands.GroupCog):
         async def callback(interaction: discord.Interaction["BallsDexBot"]) -> None:
             await self._claim(interaction, pool)
 
-        return app_commands.Command(
-            name=pool.command_name,
-            description=pool.command_description,
-            callback=callback,
-        )
+        return app_commands.Command(name=pool.command_name, description=pool.command_description, callback=callback)
 
     async def _register_pool_commands(self):
         if not self.app_command:
@@ -106,14 +102,14 @@ class Crates(commands.GroupCog):
         cooldown.last_claimed = timezone.now()
         await cooldown.asave(update_fields=("last_claimed",))
 
-        await interaction.followup.send(view=await PoolResultView.build(interaction.user, pool, instances))
+        await interaction.followup.send(view=await PoolResultView.build(self.bot, interaction.user, pool, instances))
 
     @app_commands.command()
     async def list(self, interaction: discord.Interaction["BallsDexBot"]):
         """
         Displays all your crates.
         """
-        await interaction.response.send_message(view=await CrateListView.build(interaction.user))
+        await interaction.response.send_message(view=await CrateListView.build(self.bot, interaction.user))
 
     @admin.command()
     @checks.app_check(checks.has_permissions("crates.add_crateinstance"))

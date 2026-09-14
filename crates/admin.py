@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 from django.contrib import admin
 from django.db import models
 from django.forms import widgets
+from django.utils.safestring import mark_safe
 from query_builder_widget import QueryBuilderWidget
 
 from .fields import POOL_FIELDS
@@ -14,10 +15,24 @@ if TYPE_CHECKING:
 
 @admin.register(Crate)
 class CrateAdmin(admin.ModelAdmin):
-    list_display = ("name", "amount_min", "amount_max")
-    list_editable = ("amount_min", "amount_max")
+    list_display = ("name", "emoji", "amount_min", "amount_max", "openable")
+    list_editable = ("amount_min", "amount_max", "openable")
     search_fields = ("name",)
     autocomplete_fields = ("reward", "pools")
+
+    fieldsets = (
+        (None, {"fields": ("name", "emoji_id", "openable")}),
+        ("Rewarding", {"fields": ("amount_min", "amount_max", "reward", "pools")}),
+    )
+
+    @admin.display(description="Emoji")
+    def emoji(self, obj: Crate):
+        if not obj.emoji_id:
+            return ""
+
+        return mark_safe(
+            f'<img src="https://cdn.discordapp.com/emojis/{obj.emoji_id}.png?size=80" title="ID: {obj.emoji_id}" />'
+        )
 
 
 @admin.register(CrateInstance)

@@ -56,7 +56,9 @@ class OpenButton(discord.ui.Button):
         )
 
         with suppress(discord.HTTPException, discord.NotFound):
-            await interaction.edit_original_response(view=await CrateListView.build(interaction.user))
+            await interaction.edit_original_response(
+                view=await CrateListView.build(interaction.client, interaction.user)
+            )
 
 
 class CrateResultView(BaseResultView):
@@ -87,7 +89,10 @@ class CrateListView(LayoutView):
 
     @classmethod
     async def build(
-        cls, user: discord.User | discord.Member, viewer: discord.User | discord.Member | None = None
+        cls,
+        bot: "BallsDexBot",
+        user: discord.User | discord.Member,
+        viewer: discord.User | discord.Member | None = None,
     ) -> "CrateListView":
         viewer = viewer or user
         settings = await get_settings()
@@ -107,7 +112,7 @@ class CrateListView(LayoutView):
         components: list[discord.ui.Section | discord.ui.TextDisplay] = []
 
         for crate in crates:
-            text_item = discord.ui.TextDisplay(f"**{crate}** ({crate.count})")
+            text_item = discord.ui.TextDisplay(f"**{await crate.describe(bot)}** ({crate.count})")
 
             if user != viewer:
                 components.append(text_item)

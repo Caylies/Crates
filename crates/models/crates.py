@@ -1,13 +1,26 @@
-from django.core.validators import MinValueValidator
+from typing import TYPE_CHECKING
+
+from django.core.validators import MinValueValidator, RegexValidator
 from django.db import models
 
 from bd_models.models import Ball, Player
 
 from .pool import Pool
+from .regex import EMOJI_ID_RE
+
+if TYPE_CHECKING:
+    from ballsdex.core.bot import BallsDexBot
 
 
 class Crate(models.Model):
     name = models.CharField(max_length=64, unique=True)
+
+    emoji_id = models.BigIntegerField(
+        null=True,
+        blank=True,
+        help_text="Optional emoji ID for this crate",
+        validators=(RegexValidator(EMOJI_ID_RE, message="Invalid emoji ID."),),
+    )
 
     reward = models.ManyToManyField(
         Ball,
@@ -30,6 +43,11 @@ class Crate(models.Model):
             ),
             models.CheckConstraint(condition=models.Q(amount_min__gte=1), name="amount_min_gte_1"),
         ]
+
+    async def describe(self, bot: "BallsDexBot") -> str:
+        emoji = bot.get_emoji(self.emoji_id)
+
+        return f"{emoji} {self.name}"
 
     def __str__(self):
         return self.name
