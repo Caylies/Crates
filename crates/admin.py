@@ -31,7 +31,7 @@ class CrateAdmin(admin.ModelAdmin):
             return ""
 
         return mark_safe(
-            f'<img src="https://cdn.discordapp.com/emojis/{obj.emoji_id}.png?size=80" title="ID: {obj.emoji_id}" />'
+            f'<img src="https://cdn.discordapp.com/emojis/{obj.emoji_id}.png?size=40" title="ID: {obj.emoji_id}" />'
         )
 
 
