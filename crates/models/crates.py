@@ -45,6 +45,9 @@ class Crate(models.Model):
         ]
 
     async def describe(self, bot: "BallsDexBot") -> str:
+        if not self.emoji_id:
+            return self.name
+
         emoji = bot.get_emoji(self.emoji_id)
 
         return f"{emoji} {self.name}"
