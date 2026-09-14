@@ -12,6 +12,7 @@ async def setup(bot: "BallsDexBot"):
     settings = await get_settings()
 
     cog = Crates(bot)
+    assert cog.app_command
     cog.app_command.name = settings.crates_slash_name
 
     replacements = {"crates": settings.plural_crate_name, "crate": settings.crate_name}

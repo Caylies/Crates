@@ -22,4 +22,5 @@ class CrateTranslator(app_commands.Translator):
             text = text.replace(before, after)
 
         new_string = locale_str(text, **string.extras) if text != string.message else string
+
         return await self.inner.translate(new_string, locale, context)

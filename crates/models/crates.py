@@ -8,14 +8,17 @@ from .pool import Pool
 
 class Crate(models.Model):
     name = models.CharField(max_length=64, unique=True)
+
     reward = models.ManyToManyField(
         Ball,
         blank=True,
         help_text="The countryballs that can be given. If blank, countryballs will be chosen at random.",
     )
+
     amount_min = models.PositiveIntegerField(
         help_text="The minimum amount of countryballs that will be given.", validators=(MinValueValidator(1),)
     )
+
     amount_max = models.PositiveIntegerField(help_text="The maximum amount of countryballs that will be given.")
     openable = models.BooleanField(default=True, help_text="Whether this crate can be opened.")
     pools = models.ManyToManyField(Pool, blank=True, related_name="crates")
