@@ -8,26 +8,13 @@ from ballsdex.core.discord import LayoutView
 from bd_models.models import BallInstance, Player
 
 from ...models import Crate, CrateInstance, get_settings
-from .crate import open_crate
+from ..core.crate import open_crate
+from .shared import BaseResultView, MenuContainer
 
 if TYPE_CHECKING:
     from ballsdex.core.bot import BallsDexBot
 
-
-class MenuContainer(discord.ui.Container):
-    def __init__(self, *children: discord.ui.Item, accent_color: discord.Color | None = None):
-        super().__init__(*children, accent_color=accent_color)
-
-    @classmethod
-    async def build(cls, *children: discord.ui.Item) -> "MenuContainer":
-        settings = await get_settings()
-        accent_color = None
-
-        if settings.menu_color:
-            color_str = settings.menu_color if settings.menu_color.startswith("#") else f"#{settings.menu_color}"
-            accent_color = discord.Color.from_str(color_str)
-
-        return cls(*children, accent_color=accent_color)
+__all__ = ("CrateListView",)
 
 
 class OpenButton(discord.ui.Button):
@@ -70,6 +57,26 @@ class OpenButton(discord.ui.Button):
 
         with suppress(discord.HTTPException, discord.NotFound):
             await interaction.edit_original_response(view=await CrateListView.build(interaction.user))
+
+
+class CrateResultView(BaseResultView):
+    @classmethod
+    async def build(
+        cls,
+        bot: "BallsDexBot",
+        author: discord.User | discord.Member,
+        crate_instance: CrateInstance,
+        instances: list[BallInstance],
+    ):
+        settings = await get_settings()
+
+        items = [
+            f"{bot.get_emoji(instance.countryball.emoji_id) or '?'} "
+            f"**{instance.countryball.country}** (`#{instance.pk:x}`)"
+            for instance in instances
+        ]
+
+        return await cls.build_view(author, f"{crate_instance.crate} {settings.crate_name.title()} Results", items)
 
 
 class CrateListView(LayoutView):
@@ -118,38 +125,5 @@ class CrateListView(LayoutView):
         )
 
         view.add_item(container)
-        return view
 
-
-class CrateResultView(LayoutView):
-    def __init__(self, author: discord.User | discord.Member):
-        super().__init__()
-        self.restrict_author(author.id)
-
-    @classmethod
-    async def build(
-        cls,
-        bot: "BallsDexBot",
-        author: discord.User | discord.Member,
-        crate_instance: CrateInstance,
-        instances: list[BallInstance],
-    ) -> "CrateResultView":
-        settings = await get_settings()
-        view = cls(author)
-
-        text_components = [
-            discord.ui.TextDisplay(
-                f"{bot.get_emoji(instance.countryball.emoji_id) or '?'} "
-                f"**{instance.countryball.country}** (`#{instance.pk:x}`)"
-            )
-            for instance in instances
-        ]
-
-        container = await MenuContainer.build(
-            discord.ui.TextDisplay(f"### {crate_instance.crate} {settings.crate_name.title()} Results"),
-            discord.ui.Separator(),
-            *text_components,
-        )
-
-        view.add_item(container)
         return view

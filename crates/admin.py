@@ -3,7 +3,9 @@ from typing import TYPE_CHECKING
 from django.contrib import admin
 from django.db import models
 from django.forms import widgets
+from query_builder_widget import QueryBuilderWidget
 
+from .fields import POOL_FIELDS
 from .models import Crate, CrateInstance, CratesSettings, Pool
 
 if TYPE_CHECKING:
@@ -30,24 +32,40 @@ class CrateInstanceAdmin(admin.ModelAdmin):
 
 @admin.register(Pool)
 class PoolAdmin(admin.ModelAdmin):
+    list_display = ("name", "cooldown", "enabled")
+    list_editable = ("cooldown", "enabled")
     search_fields = ("name",)
 
-    def has_add_permission(self, request: "HttpRequest"):
-        return False
+    fieldsets = (
+        (
+            "Pool configuration",
+            {
+                "description": "Basic pool configuration.",
+                "fields": ("name", "cooldown", "amount_min", "amount_max", "enabled"),
+            },
+        ),
+        (
+            "Command configuration",
+            {"description": "Command configuration for the pool.", "fields": ("command_name", "command_description")},
+        ),
+        (
+            "Advanced pool configuration",
+            {
+                "description": "Advanced pool configuration for controlling pool behavior.",
+                "fields": ("conditions",),
+                "classes": ("collapse",),
+            },
+        ),
+    )
 
-    def has_delete_permission(self, request: "HttpRequest", obj: Pool | None = None):
-        return False
-
-    def get_readonly_fields(self, request: "HttpRequest", obj: Pool | None = None):
-        return [field.name for field in self.model._meta.fields] + [
-            field.name for field in self.model._meta.many_to_many
-        ]
+    formfield_overrides = {models.JSONField: {"widget": QueryBuilderWidget(POOL_FIELDS)}}
 
 
 @admin.register(CratesSettings)
 class CratesSettingsAdmin(admin.ModelAdmin):
     save_on_top = True
     formfield_overrides = {models.TextField: {"widget": widgets.TextInput}}
+
     fieldsets = (
         (
             "Personalization",
@@ -58,11 +76,7 @@ class CratesSettingsAdmin(admin.ModelAdmin):
         ),
         (
             "Advanced personalization",
-            {
-                "description": "Advanced package personalization.",
-                "fields": ("menu_color", "claim_message"),
-                "classes": ("collapse",),
-            },
+            {"description": "Advanced package personalization.", "fields": ("menu_color",), "classes": ("collapse",)},
         ),
     )
 

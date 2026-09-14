@@ -1,14 +1,12 @@
-import re
-
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.deconstruct import deconstructible
 
+from .regex import HEX_RE, SLASH_COMMAND_RE
+
 CACHE_KEY = "crates:settings"
-SLASH_COMMAND_RE = re.compile(r"^[a-z0-9_-]{1,32}$")
-HEX_RE = re.compile(r"^#(?:[0-9a-fA-F]{3}){1,2}$")
 KEYWORDS = ("collectibles", "collectible", "discord", "bot", "crates", "crate", "name", "pool")
 
 
@@ -33,12 +31,14 @@ class CratesSettings(models.Model):
         help_text="The singular name of your crates",
         validators=(RegexValidator(SLASH_COMMAND_RE, message="Invalid slash command name."),),
     )
+
     plural_crate_name = models.CharField(
         max_length=32,
         default="crates",
         help_text="The plural name of your crates",
         validators=(RegexValidator(SLASH_COMMAND_RE, message="Invalid slash command name."),),
     )
+
     crates_slash_name = models.CharField(
         max_length=32,
         default="crates",
@@ -52,12 +52,6 @@ class CratesSettings(models.Model):
         null=True,
         help_text="The accent color for view containers in hex format. Leave blank for none.",
         validators=(RegexValidator(HEX_RE, message="Invalid hex color format."),),
-    )
-    claim_message = models.CharField(
-        max_length=256,
-        default="You received one **{name}** {crate}.",
-        help_text="Sent on a successful claim.",
-        validators=(KeywordValidator(*KEYWORDS),),
     )
 
     def clean(self) -> None:

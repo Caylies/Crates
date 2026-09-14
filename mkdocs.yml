@@ -38,6 +38,7 @@ nav:
   - Getting Started:
     - Overview: getting-started/overview.md
     - Configuration: getting-started/configuration.md
+    - Pools: getting-started/pools.md
   - Changelog: changelog.md
 
 markdown_extensions:

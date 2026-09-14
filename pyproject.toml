@@ -11,7 +11,9 @@ authors = [
 requires-python = ">=3.13"
 readme = "README.md"
 
-dependencies = []
+dependencies = [
+    "query-builder-widget",
+]
 
 [dependency-groups]
 dev = [
@@ -41,6 +43,9 @@ ignore = ["E203"]
 [tool.ruff.lint.isort]
 known-first-party = ["ballsdex", "bd_models", "settings"]
 split-on-trailing-comma = false
+
+[tool.uv.sources]
+query-builder-widget = { git = "https://github.com/Caylies/QueryBuilderWidget", rev = "1.2.1" }
 
 [project.urls]
 Homepage = "https://caylies.github.io/Crates/"
