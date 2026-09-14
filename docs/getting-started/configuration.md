@@ -4,8 +4,6 @@ Crates can be configured from the Django admin panel. A settings instance will a
 
 Package settings automatically resync every 60 seconds. Some settings require the package to be reloaded using the `[p]reload crates.package` command.
 
-<!-- Decrease your zoom if you have difficulty reading the grid table. -->
-
 +------------------------+-------------------------------------------------------------------------------------------------+
 | Setting                | Details                                                                                         |
 +========================+=================================================================================================+
