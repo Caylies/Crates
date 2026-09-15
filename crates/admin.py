@@ -18,11 +18,11 @@ class CrateAdmin(admin.ModelAdmin):
     list_display = ("name", "emoji", "rarity", "amount_min", "amount_max", "openable")
     list_editable = ("rarity", "amount_min", "amount_max", "openable")
     search_fields = ("name",)
-    autocomplete_fields = ("reward", "pools")
+    autocomplete_fields = ("reward", "specials", "pools")
 
     fieldsets = (
         (None, {"fields": ("name", "emoji_id", "rarity", "openable")}),
-        ("Rewarding", {"fields": ("reward", "amount_min", "amount_max", "pools")}),
+        ("Rewarding", {"fields": ("reward", "specials", "amount_min", "amount_max", "pools")}),
     )
 
     @admin.display(description="Emoji")
