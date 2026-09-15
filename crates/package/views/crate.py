@@ -71,12 +71,13 @@ class CrateResultView(BaseResultView):
         instances: list[BallInstance],
     ):
         settings = await get_settings()
+        items = []
 
-        items = [
-            f"{bot.get_emoji(instance.countryball.emoji_id) or '?'} "
-            f"**{instance.countryball.country}** (`#{instance.pk:x}`)"
-            for instance in instances
-        ]
+        for instance in instances:
+            ball_emoji = bot.get_emoji(instance.countryball.emoji_id) or "?"
+            special_emoji = f"{instance.special.emoji} " if instance.special else ""
+
+            items.append(f"{special_emoji}{ball_emoji} **{instance.countryball.country}** (`#{instance.pk:x}`)")
 
         return await cls.build_view(author, f"{crate_instance.crate} {settings.crate_name.title()} Results", items)
 

@@ -10,6 +10,7 @@ from ...models import CrateInstance
 async def open_crate(crate_instance: CrateInstance, player: Player) -> list[BallInstance]:
     instances: list[BallInstance] = []
 
+    specials = [special async for special in crate_instance.crate.specials.all()]
     reward = [ball async for ball in crate_instance.crate.reward.all()]
 
     if not reward:
@@ -19,7 +20,7 @@ async def open_crate(crate_instance: CrateInstance, player: Player) -> list[Ball
         ball_instance = await BallInstance.objects.acreate(
             ball=random.choice(reward),
             player=player,
-            special=BallSpawnView.get_random_special(),
+            special=random.choice(specials) if specials else BallSpawnView.get_random_special(),
             attack_bonus=random.randint(-settings.max_attack_bonus, settings.max_attack_bonus),
             health_bonus=random.randint(-settings.max_attack_bonus, settings.max_attack_bonus),
         )

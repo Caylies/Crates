@@ -20,7 +20,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added documentation for how pools work.
 - Added emoji support for crates.
 - Added a `rarity` field to crates, used to weight which crate is granted when a pool has multiple.
+- Added a `specials` field to crates, used for selecting which specials will be given by that crate.
 - Added an `amount` parameter to `/crates admin give` for giving multiple crates at once.
+- In the crate result view, ball instances now display their special via the special's emoji.
 - Added a background image to the Crates website homepage. 
 
 ### Changed

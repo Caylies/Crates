@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from django.core.validators import MinValueValidator, RegexValidator
 from django.db import models
 
-from bd_models.models import Ball, Player
+from bd_models.models import Ball, Player, Special
 
 from .pool import Pool
 from .regex import EMOJI_ID_RE
@@ -30,6 +30,15 @@ class Crate(models.Model):
         Ball,
         blank=True,
         help_text="The countryballs that can be given. If blank, countryballs will be chosen at random.",
+    )
+
+    specials = models.ManyToManyField(
+        Special,
+        blank=True,
+        help_text=(
+            "The specials that can be given. "
+            "If blank, specials will be chosen at random with the same algorithm used when catching a ball."
+        ),
     )
 
     amount_min = models.PositiveIntegerField(
