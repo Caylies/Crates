@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ---
 
-## [Unreleased]
+## [0.2.0] <small>- 2026-09-15</small>
 
 ### Added
 
@@ -67,6 +67,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Initial Crates release.
 
 
-[Unreleased]: https://github.com/Caylies/Crates/compare/0.1.1...HEAD
+[Unreleased]: https://github.com/Caylies/Crates/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/Caylies/Crates/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/Caylies/Crates/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/Caylies/Crates/releases/tag/0.1.0
