@@ -19,11 +19,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added emoji support for crates.
 - Added a `rarity` field to crates, used to weight which crate is granted when a pool has multiple.
 - Added an `amount` parameter to `/crates admin give` for giving multiple crates at once.
+- Added a background image to the Crates website homepage. 
+
+### Fixed
+
+- Fixed light mode website colors.
 
 ### Changed
 
 - Reorganized the crate admin form into sections.
 - The `openable` field for crates can now be edited directly from the admin crate list.
+- Revamped the Crates website colors.
+- Slightly modified Crates' logo colors.
 
 ### Removed
 
