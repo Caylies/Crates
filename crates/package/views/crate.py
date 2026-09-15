@@ -73,7 +73,7 @@ class CrateResultView(BaseResultView):
         settings = await get_settings()
         items = []
 
-        for instance in instances:
+        for instance in sorted(instances, key=lambda ball: ball.countryball.country):
             ball_emoji = bot.get_emoji(instance.countryball.emoji_id) or "?"
             special_emoji = f"{instance.special.emoji} " if instance.special else ""
 

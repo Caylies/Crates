@@ -41,6 +41,22 @@ class Crate(models.Model):
         ),
     )
 
+    respect_ball_rarity = models.BooleanField(
+        default=False,
+        help_text=(
+            "If enabled, balls in the 'rewards' field are weighted by rarity when one is randomly selected, "
+            "instead of each having an equal chance."
+        ),
+    )
+
+    respect_special_rarity = models.BooleanField(
+        default=False,
+        help_text=(
+            "If enabled, specials in the 'specials' field are weighted by rarity when one is randomly selected, "
+            "instead of each having an equal chance."
+        ),
+    )
+
     amount_min = models.PositiveIntegerField(
         help_text="The minimum amount of countryballs that will be given.", validators=(MinValueValidator(1),)
     )
