@@ -8,21 +8,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
-- **Custom pool instances:**
-    - Added `Amount min` and `Amount max` fields to configure the number of crates a pool can grant.
-    - Added a `Conditions` field for controlling which players can claim from a pool using an advanced builder widget.
-    - Added `Server`, `User`, `Ball completion percentage`, and `Ball count` rules for pool conditions.
-    - Pool commands are now registered dynamically using the `command_name` and `command_description` fields.
-    - Added the `reloadcrates` text command for synchronizing pool commands.
-- Added a new pool claiming view rather than using a claim message.
-- Added documentation for pools.
+- Custom pools can now be created and existing pools are configurable.
+- Added `Amount min` and `Amount max` fields to configure how many crates a pool can grant.
+- Added a `Conditions` field for controlling who can claim from a pool, using an advanced condition builder.
+- Added `Server`, `User`, `Ball completion percentage`, and `Ball count` condition rules for pools.
+- Pool commands are now registered dynamically from each pool's `command_name` and `command_description` fields.
+- Added the `reloadcrates` text command to re-sync pool commands after adding, renaming, or removing a pool.
+- Added a view for claiming crates from a pool.
+- Added documentation for how pools work.
 - Added emoji support for crates.
-- A crate's `openable` field can now be edited from the admin panel's crate list.
-- Added an `amount` parameter to `/crates admin give` for giving multiple crates.
+- Added a `rarity` field to crates, used to weight which crate is granted when a pool has multiple.
+- Added an `amount` parameter to `/crates admin give` for giving multiple crates at once.
 
 ### Changed
 
-- Organized crate forum fields.
+- Reorganized the crate admin form into sections.
+- The `openable` field for crates can now be edited directly from the admin crate list.
 
 ### Removed
 

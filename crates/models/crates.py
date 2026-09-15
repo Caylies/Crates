@@ -22,6 +22,10 @@ class Crate(models.Model):
         validators=(RegexValidator(EMOJI_ID_RE, message="Invalid emoji ID."),),
     )
 
+    rarity = models.FloatField(
+        default=1.0, help_text="Weight used when randomly picking a crate to give.", validators=(MinValueValidator(0),)
+    )
+
     reward = models.ManyToManyField(
         Ball,
         blank=True,
