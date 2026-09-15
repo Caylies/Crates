@@ -17,7 +17,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added a new pool claiming view rather than using a claim message.
 - Added documentation for pools.
 - Added emoji support for crates.
-- Added the ability to edit a crate's `openable` field from the admin panel's crate list.
+- A crate's `openable` field can now be edited from the admin panel's crate list.
+- Added an `amount` parameter to `/crates admin give` for giving multiple crates.
 
 ### Changed
 

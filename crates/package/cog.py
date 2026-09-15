@@ -113,7 +113,13 @@ class Crates(commands.GroupCog):
 
     @admin.command()
     @checks.app_check(checks.has_permissions("crates.add_crateinstance"))
-    async def give(self, interaction: discord.Interaction["BallsDexBot"], user: discord.User, crate: CrateTransform):
+    async def give(
+        self,
+        interaction: discord.Interaction["BallsDexBot"],
+        user: discord.User,
+        crate: CrateTransform,
+        amount: int = 1,
+    ):
         """
         Gives a crate to a user.
 
@@ -123,19 +129,24 @@ class Crates(commands.GroupCog):
             The user you want to give a crate to.
         crate: Crate
             The crate you want to give.
+        amount: int | None
+            The amount of crates you want to give.
         """
         await interaction.response.defer(ephemeral=True)
 
         settings = await get_settings()
         player, _ = await Player.objects.aget_or_create(discord_id=user.id)
 
-        await CrateInstance.objects.acreate(player=player, crate=crate)
+        for _ in range(amount):
+            await CrateInstance.objects.acreate(player=player, crate=crate)
+
+        grammar_name = settings.crate_name if amount == 1 else settings.plural_crate_name
 
         log.info(
-            f"{interaction.user.name} gave one '{crate}' {settings.crate_name} to {user.name}.", extra={"webhook": True}
+            f"{interaction.user.name} gave {amount} '{crate}' {grammar_name} to {user.name}.", extra={"webhook": True}
         )
 
-        await interaction.followup.send(f"Gave one **{crate}** {settings.crate_name} to {user.mention}.")
+        await interaction.followup.send(f"Gave {amount} **{crate}** {grammar_name} to {user.mention}.")
 
     @admin.command()
     @checks.app_check(checks.has_permissions("crates.view_crateinstance"))
