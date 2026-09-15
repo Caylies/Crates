@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The `openable` field for crates can now be edited directly from the admin crate list.
 - Revamped the Crates website colors.
 - Slightly modified Crates' logo colors.
+- Improved documentation.
 
 ### Removed
 

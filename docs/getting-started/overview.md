@@ -1,14 +1,18 @@
 # Overview
 
-**Crates** is a Ballsdex package for crates, also referred to as *packs*. Crates may be opened, traded, and rewarded over time. Opening a crate rewards the user with a set amount of countryballs.
+**Crates** is a Ballsdex package for crates, also referred to as *packs*. Crates may be opened, traded,
+and rewarded over time. Opening a crate rewards the user with a set amount of countryballs.
 
 ## The Problem
 
-Packs are one of the most highly requested Ballsdex packages. However, the ecosystem for packages centered around packs is scarce. The packages that do exist for packs often contain unsafe features, unmaintained code, and heavy customizability constraints.
+Packs are one of the most highly requested Ballsdex packages. However, the ecosystem for packages centered around
+packs is scarce. The packages that do exist for packs often contain unsafe features, unmaintained code,
+and heavy customizability constraints.
 
 ## Philosophy
 
-Crates aims to be a configurable, minimalistic, and straightforward package. Internally, code readability and safety are highly valued.
+Crates aims to be a configurable, minimalistic, and straightforward package. Internally, code readability and safety
+are highly valued.
 
 Design choices for Crates follow three core rules:
 
