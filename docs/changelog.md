@@ -11,16 +11,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - Custom pools can now be created and existing pools are configurable.
-- Added `Amount min` and `Amount max` fields to configure how many crates a pool can grant.
-- Added a `Conditions` field for controlling who can claim from a pool, using an advanced condition builder.
-- Added `Server`, `User`, `Ball completion percentage`, and `Ball count` condition rules for pools.
-- Pool commands are now registered dynamically from each pool's `command_name` and `command_description` fields.
+- Added `amount min` and `amount max` fields to configure how many crates a pool can grant.
+- Added a `conditions` field for controlling who can claim from a pool, using an advanced condition builder.
+- Added `server`, `user`, `ball completion percentage`, and `ball count` condition rules for pools.
+- Pool commands are now registered dynamically from each pool's `command name` and `command description` fields.
 - Added the `reloadcrates` text command to re-sync pool commands after adding, renaming, or removing a pool.
 - Added a view for claiming crates from a pool.
 - Added documentation for how pools work.
 - Added emoji support for crates.
 - Added a `rarity` field to crates, used to weight which crate is granted when a pool has multiple.
 - Added a `specials` field to crates, used for selecting which specials will be given by that crate.
+- Added `respect ball rarity` and `respect special rarity` fields for crates, allowing balls and specials to be weighted by rarity when selected instead of each having an equal chance.
 - Added an `amount` parameter to `/crates admin give` for giving multiple crates at once.
 - In the crate result view, ball instances now display their special via the special's emoji.
 - Added a background image to the Crates website homepage. 
@@ -29,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Reorganized the crate admin form into sections.
 - The `openable` field for crates can now be edited directly from the admin crate list.
+- Ball instances in the result view are now sorted by name.
 - Revamped the Crates website colors.
 - Slightly modified Crates' logo colors.
 - Improved changelog formatting.

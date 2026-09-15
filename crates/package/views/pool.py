@@ -19,5 +19,8 @@ class PoolResultView(BaseResultView):
         return await cls.build_view(
             author,
             f"{pool.name.title()} Results",
-            [f"**{await instance.crate.describe(bot)}**" for instance in instances],
+            [
+                f"**{await instance.crate.describe(bot)}**"
+                for instance in sorted(instances, key=lambda crate: crate.crate.name)
+            ],
         )

@@ -22,7 +22,21 @@ class CrateAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {"fields": ("name", "emoji_id", "rarity", "openable")}),
-        ("Rewarding", {"fields": ("reward", "specials", "amount_min", "amount_max", "pools")}),
+        (
+            "Rewarding",
+            {
+                "description": "Fields for crate rewarding logic",
+                "fields": ("reward", "specials", "amount_min", "amount_max"),
+            },
+        ),
+        ("Distribution", {"description": "Crate distribution fields", "fields": ("pools",)}),
+        (
+            "Behavior",
+            {
+                "description": "Fields for controlling crate behavior",
+                "fields": ("respect_ball_rarity", "respect_special_rarity"),
+            },
+        ),
     )
 
     @admin.display(description="Emoji")
