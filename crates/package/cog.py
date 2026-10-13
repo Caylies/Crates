@@ -166,10 +166,9 @@ class Crates(commands.GroupCog):
 
         if not player:
             await interaction.followup.send(f"{user.mention} has no {settings.plural_crate_name} to view.")
-
             return
 
-        await interaction.followup.send(view=await CrateListView.build(user, interaction.user))
+        await interaction.followup.send(view=await CrateListView.build(self.bot, user, interaction.user))
 
     @commands.command()
     async def reloadcrates(self, ctx: commands.Context["BallsDexBot"]):
