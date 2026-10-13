@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- Added a `special behavior` field for determining how specials are chosen for crates. This field also allows specials to be disabled for a crate.
+
+### Changed
+
+- Improved speed of crate rewarding for crates that reward many balls.
+
+### Fixed
+
+- Fixed attack bonus being used for health instead of the health bonus setting for crate rewards.
+
+---
+
 ## [0.2.0] <small>- 2026-09-15</small>
 
 ### Added
