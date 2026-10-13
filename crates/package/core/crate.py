@@ -1,8 +1,8 @@
 import random
 
 from ballsdex.packages.countryballs.countryball import BallSpawnView
-from ballsdex.settings import settings
 from bd_models.models import Ball, BallInstance, Player, Special, balls
+from settings.models import settings
 
 from ...models import Crate, CrateInstance, SpecialBehavior
 
