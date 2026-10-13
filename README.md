@@ -9,4 +9,20 @@
 
 **Crates** is a Ballsdex package for crates, also referred to as packs.
 
+<details>
+<summary><b>Installation</b></summary>
+
+<div align="left">
+
+```toml
+[[ballsdex.packages]]
+location = "git+https://github.com/Caylies/Crates.git@0.2.0"
+path = "crates"
+enabled = true
+```
+
+</div>
+
+</details>
+
 [Crates documentation website](https://caylies.github.io/Crates/)
