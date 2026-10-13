@@ -17,13 +17,17 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "ruff>=0.16.7",
+    "bd-stubs[all]",
+    "ruff>=0.17.0",
 ]
 
 docs = [
     "markdown-grid-tables>=0.6.0",
     "mkdocs-material>=9.7.7",
 ]
+
+[tool.pyright]
+reportMissingModuleSource = "none"
 
 [tool.ruff]
 line-length = 120
@@ -45,7 +49,8 @@ known-first-party = ["ballsdex", "bd_models", "settings"]
 split-on-trailing-comma = false
 
 [tool.uv.sources]
-query-builder-widget = { git = "https://github.com/Caylies/QueryBuilderWidget", rev = "1.2.1" }
+query-builder-widget = { git = "https://github.com/Caylies/QueryBuilderWidget", rev = "1.2.2" }
+bd-stubs = { git = "https://github.com/Caylies/bd-stubs", rev = "0.1.2" }
 
 [project.urls]
 Homepage = "https://caylies.github.io/Crates/"

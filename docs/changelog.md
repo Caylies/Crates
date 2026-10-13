@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- Added a `special behavior` field for determining how specials are chosen for crates. This field also allows specials to be disabled for a crate.
+- Added package installation entry to the project's README file for those who can't visit the website.
+
+### Changed
+
+- Improved speed of crate rewarding for crates that reward many balls.
+- Improved type checking internally.
+
+### Fixed
+
+- Fixed attack bonus being used for health instead of the health bonus setting for crate rewards.
+- Fixed old daily and weekly pools failing to migrate. They will now error without breaking the package if they need to be migrated.
+- Fixed `/crates admin view` erroring with crate emojis.
+
+---
+
 ## [0.2.0] <small>- 2026-09-15</small>
 
 ### Added

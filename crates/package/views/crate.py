@@ -24,7 +24,7 @@ class OpenButton(discord.ui.Button):
         self.crate_instance_id = crate_instance.pk
         self.disabled = not crate_instance.crate.openable
 
-    async def callback(self, interaction: discord.Interaction["BallsDexBot"]):
+    async def callback(self, interaction: discord.Interaction["BallsDexBot"]):  # type: ignore
         await interaction.response.defer()
 
         settings = await get_settings()
@@ -113,13 +113,13 @@ class CrateListView(LayoutView):
         components: list[discord.ui.Section | discord.ui.TextDisplay] = []
 
         for crate in crates:
-            text_item = discord.ui.TextDisplay(f"**{await crate.describe(bot)}** ({crate.count})")
+            text_item = discord.ui.TextDisplay(f"**{await crate.describe(bot)}** ({crate.count})")  # type: ignore
 
             if user != viewer:
                 components.append(text_item)
                 continue
 
-            components.append(discord.ui.Section(text_item, accessory=OpenButton(crate.player_instances[0])))
+            components.append(discord.ui.Section(text_item, accessory=OpenButton(crate.player_instances[0])))  # type: ignore
 
         if not components:
             components.append(discord.ui.TextDisplay(f"*No {settings.plural_crate_name} found*"))
