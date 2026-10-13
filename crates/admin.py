@@ -34,7 +34,7 @@ class CrateAdmin(admin.ModelAdmin):
             "Behavior",
             {
                 "description": "Fields for controlling crate behavior",
-                "fields": ("respect_ball_rarity", "respect_special_rarity"),
+                "fields": ("special_behavior", "respect_ball_rarity", "respect_special_rarity"),
             },
         ),
     )

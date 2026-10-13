@@ -12,6 +12,12 @@ if TYPE_CHECKING:
     from ballsdex.core.bot import BallsDexBot
 
 
+class SpecialBehavior(models.TextChoices):
+    NONE = "none", "No specials"
+    FROM_LIST = "from_list", "Pick from the list"
+    CATCH_ODDS = "catch_odds", "Pick from the list using catch odds"
+
+
 class Crate(models.Model):
     name = models.CharField(max_length=64, unique=True)
 
@@ -30,6 +36,19 @@ class Crate(models.Model):
         Ball,
         blank=True,
         help_text="The countryballs that can be given. If blank, countryballs will be chosen at random.",
+    )
+
+    special_behavior = models.CharField(
+        max_length=20,
+        choices=SpecialBehavior.choices,
+        default=SpecialBehavior.CATCH_ODDS,
+        help_text=(
+            "How this crate decides whether to give a special. "
+            "'No specials': never gives one. "
+            "'Pick from the list': gives one of the specials below, each equally likely. "
+            "'Pick from the list using catch odds': picks from the specials below "
+            "using the same chances as catching a ball."
+        ),
     )
 
     specials = models.ManyToManyField(
