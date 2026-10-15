@@ -52,7 +52,7 @@ async def open_crate(crate_instance: CrateInstance, player: Player) -> list[Ball
         specials = [special async for special in crate.specials.all()]
 
     reward = [ball async for ball in Ball.objects.filter(Q(crate=crate) | Q(groups__crate=crate)).distinct()]
-    
+
     respect_ball_rarity = crate.respect_ball_rarity and bool(reward)
 
     if not reward:
