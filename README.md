@@ -16,7 +16,7 @@
 
 ```toml
 [[ballsdex.packages]]
-location = "git+https://github.com/Caylies/Crates.git@0.2.0"
+location = "git+https://github.com/Caylies/Crates.git@0.3.0"
 path = "crates"
 enabled = true
 ```

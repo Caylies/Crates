@@ -1,7 +1,7 @@
 [project]
 name = "crates"
 keywords = ["packs", "fun", "configurable"]
-version = "0.2.0"
+version = "0.3.0"
 description = "A Ballsdex package for crates, also referred to as packs."
 license = "MIT"
 license-files = ["LICENSE"]
@@ -18,7 +18,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "bd-stubs[all]",
-    "ruff>=0.17.0",
+    "ruff>=0.17.1",
 ]
 
 docs = [
