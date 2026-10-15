@@ -54,6 +54,9 @@ class CratesSettings(models.Model):
         validators=(RegexValidator(HEX_RE, message="Invalid hex color format."),),
     )
 
+    def crate_name_for(self, count: int) -> str:
+        return self.crate_name if count == 1 else self.plural_crate_name
+
     def clean(self) -> None:
         if CratesSettings.objects.exclude(pk=self.pk).exists():
             raise ValidationError("You can only have one instance of CratesSettings.")

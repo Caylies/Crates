@@ -7,12 +7,28 @@ from query_builder_widget import use_operator
 from bd_models.models import BallInstance, Player, balls
 from settings.models import settings
 
+from ....models import CrateInstance, get_settings
 from ..utils.discord import user_in_guild
 
 if TYPE_CHECKING:
     from ballsdex.core.bot import BallsDexBot
 
 log = logging.getLogger("crates.package.core.pool.checks")
+
+_OPERATOR_PHRASES = {
+    "equals": "exactly",
+    "not_equals": "anything other than",
+    "greater": "more than",
+    "greater_or_equal": "at least",
+    "less": "less than",
+    "less_or_equal": "at most",
+}
+
+
+def _format_requirement(operator: str, expected: str, suffix: str = "") -> str:
+    phrase = _OPERATOR_PHRASES.get(operator, operator.replace("_", " "))
+
+    return f"{phrase} {expected}{suffix}"
 
 
 def _format_operator(operator: str) -> str:
@@ -85,3 +101,19 @@ async def is_user(user: discord.User, expected: str, operator: str):
         return False, "Must be the correct user to claim"
 
     return True
+
+
+async def has_crate_count(player: Player, expected: str, operator: str):
+    count = await CrateInstance.objects.filter(player=player).acount()
+    expected_count = int(expected)
+
+    if use_operator(operator, count, expected_count):
+        return True
+
+    crates_settings = await get_settings()
+    requirement = _format_requirement(operator, expected)
+
+    required_name = crates_settings.crate_name_for(expected_count)
+    current_name = crates_settings.crate_name_for(count)
+
+    return False, f"You must have {requirement} {required_name}, but you currently have {count} {current_name}."
