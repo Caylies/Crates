@@ -5,6 +5,7 @@ import discord
 from django.db.models import Count, Prefetch
 
 from ballsdex.core.discord import LayoutView
+from ballsdex.core.utils.menus import ItemFormatter, ListSource, Menu, dynamic_chunks
 from bd_models.models import BallInstance, Player
 
 from ...models import Crate, CrateInstance, get_settings
@@ -79,7 +80,7 @@ class CrateResultView(BaseResultView):
 
             items.append(f"{special_emoji}{ball_emoji} **{instance.countryball.country}** (`#{instance.pk:x}`)")
 
-        return await cls.build_view(author, f"{crate_instance.crate} {settings.crate_name.title()} Results", items)
+        return await cls.build_view(bot, author, f"{crate_instance.crate} {settings.crate_name.title()} Results", items)
 
 
 class CrateListView(LayoutView):
@@ -110,26 +111,31 @@ class CrateListView(LayoutView):
         ]
 
         view = cls(viewer)
-        components: list[discord.ui.Section | discord.ui.TextDisplay] = []
 
-        for crate in crates:
-            text_item = discord.ui.TextDisplay(f"**{await crate.describe(bot)}** ({crate.count})")  # type: ignore
-
-            if user != viewer:
-                components.append(text_item)
-                continue
-
-            components.append(discord.ui.Section(text_item, accessory=OpenButton(crate.player_instances[0])))  # type: ignore
-
-        if not components:
-            components.append(discord.ui.TextDisplay(f"*No {settings.plural_crate_name} found*"))
-
-        container = await MenuContainer.build(
+        header: list[discord.ui.Item] = [
             discord.ui.TextDisplay(f"### {user.display_name} {settings.plural_crate_name.title()}"),
             discord.ui.Separator(),
-            *components,
-        )
-
+        ]
+        container = await MenuContainer.build(*header)
         view.add_item(container)
+
+        async def components():
+            if not crates:
+                yield discord.ui.TextDisplay(f"*No {settings.plural_crate_name} found*")
+                return
+
+            for crate in crates:
+                text_item = discord.ui.TextDisplay(f"**{await crate.describe(bot)}** ({crate.count})")  # type: ignore
+
+                if user != viewer:
+                    yield text_item
+                    continue
+
+                yield discord.ui.Section(text_item, accessory=OpenButton(crate.player_instances[0]))  # type: ignore
+
+        chunks = await dynamic_chunks(view, components())
+
+        menu = Menu(bot, view, ListSource(chunks), ItemFormatter(container, position=len(header) - 1))
+        await menu.init()
 
         return view

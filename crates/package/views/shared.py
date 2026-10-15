@@ -1,9 +1,15 @@
+from typing import TYPE_CHECKING
+
 import discord
 from discord.ui import Container, Item
 
 from ballsdex.core.discord import LayoutView
+from ballsdex.core.utils.menus import ItemFormatter, ListSource, Menu, dynamic_chunks, iter_to_async
 
 from ...models import get_settings
+
+if TYPE_CHECKING:
+    from ballsdex.core.bot import BallsDexBot
 
 
 class MenuContainer(Container):
@@ -28,15 +34,19 @@ class BaseResultView(LayoutView):
         self.restrict_author(author.id)
 
     @classmethod
-    async def build_view(cls, author: discord.User | discord.Member, title: str, items: list[str]):
+    async def build_view(cls, bot: "BallsDexBot", author: discord.User | discord.Member, title: str, items: list[str]):
         view = cls(author)
 
-        container = await MenuContainer.build(
-            discord.ui.TextDisplay(f"### {title}"),
-            discord.ui.Separator(),
-            *[discord.ui.TextDisplay(item) for item in items],
-        )
-
+        header: list[Item] = [discord.ui.TextDisplay(f"### {title}"), discord.ui.Separator()]
+        container = await MenuContainer.build(*header)
         view.add_item(container)
+
+        chunks = await dynamic_chunks(view, iter_to_async(discord.ui.TextDisplay(item) for item in items))
+
+        source = ListSource(chunks or [[]])
+        formatter = ItemFormatter(container, position=len(header) - 1)
+
+        menu = Menu(bot, view, source, formatter)
+        await menu.init()
 
         return view

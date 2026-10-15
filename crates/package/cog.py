@@ -1,4 +1,5 @@
 import logging
+from collections import Counter
 from typing import TYPE_CHECKING
 
 import discord
@@ -74,7 +75,7 @@ class Crates(commands.GroupCog):
             available_at = cooldown.available_at()
 
             await interaction.followup.send(
-                f"You've already claimed from {pool.name.lower()}. Try again <t:{int(available_at.timestamp())}:R>."
+                f"You have already claimed from {pool.name.lower()}. Try again <t:{int(available_at.timestamp())}:R>."
             )
 
             return
@@ -82,7 +83,11 @@ class Crates(commands.GroupCog):
         condition_result = await evaluate_pool(pool, bot=self.bot, user=interaction.user, player=player)
 
         if not condition_result.passed:
-            failures_list = " _**OR**_\n".join(f"- {message}" for message in condition_result.failures)
+            failures = Counter(condition_result.failures)
+
+            failures_list = " _**OR**_\n".join(
+                f"- {message}" + (f" (x{count})" if count > 1 else "") for message, count in failures.items()
+            )
 
             await interaction.followup.send(
                 f"You do not meet the required criteria to claim from {pool.name.lower()}.\n\n{failures_list}"
