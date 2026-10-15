@@ -15,4 +15,5 @@ POOL_FIELDS: dict[str, QueryBuilderField] = {
     "ball_count": {"text": "Ball count", "operators": _COMMON_NUMBER_OPERATORS},
     "server": {"text": "Server", "operators": _BOOLEAN_OPERATORS},
     "user": {"text": "User", "operators": _BOOLEAN_OPERATORS},
+    "total_crates": {"text": "Crate count", "operators": _COMMON_NUMBER_OPERATORS},
 }

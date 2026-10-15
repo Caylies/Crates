@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Added a `special behavior` field for determining how specials are chosen for crates. This field also allows specials to be disabled for a crate.
 - Added a `reward groups` field for giving crate rewards by ball group ([#19](https://github.com/Caylies/Crates/pull/19)).
+- Added a `crate count` pool condition rule for setting a pool's criteria based on the total amount of crates a user owns.
 - Added pagination to all menus.
 - Added package installation entry to the project's README file for those who can't visit the website.
 
