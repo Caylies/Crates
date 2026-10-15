@@ -17,6 +17,7 @@ class PoolResultView(BaseResultView):
         cls, bot: "BallsDexBot", author: discord.User | discord.Member, pool: Pool, instances: list[CrateInstance]
     ):
         return await cls.build_view(
+            bot,
             author,
             f"{pool.name.title()} Results",
             [

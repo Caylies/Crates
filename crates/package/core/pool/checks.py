@@ -42,10 +42,10 @@ async def in_guild(bot: "BallsDexBot", user: discord.User, expected: str, operat
 
     match operator:
         case "equals":
-            return condition, f"Must be in the **{guild.name}** server"
+            return condition, f"Must be in the *{guild.name}* server"
 
         case "not_equals":
-            return not condition, f"Must not be in the **{guild.name}** server"
+            return not condition, f"Must not be in the *{guild.name}* server"
 
 
 async def has_ball_completion(player: Player, expected: str, operator: str):

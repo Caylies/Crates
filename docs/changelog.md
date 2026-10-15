@@ -12,12 +12,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Added a `special behavior` field for determining how specials are chosen for crates. This field also allows specials to be disabled for a crate.
 - Added a `reward groups` field for giving crate rewards by ball group ([#19](https://github.com/Caylies/Crates/pull/19)).
+- Added pagination to all menus.
 - Added package installation entry to the project's README file for those who can't visit the website.
 
 ### Changed
 
 - Improved speed of crate rewarding for crates that reward many balls.
 - Improved the help text for the `specials` crate field.
+- Duplicate pool criteria warnings are now collapsed into one.
+- The `server` condition's warning no longer makes the server name bold and instead makes it italic.
+- Improved grammar in some responses.
 - Improved type checking internally.
 
 ### Fixed
