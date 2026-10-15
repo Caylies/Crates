@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Changed
 
 - Improved speed of crate rewarding for crates that reward many balls.
+- Improved the help text for the `specials` crate field.
 - Improved type checking internally.
 
 ### Fixed

@@ -53,30 +53,25 @@ class Crate(models.Model):
     special_behavior = models.CharField(
         max_length=20,
         choices=SpecialBehavior.choices,
-        default=SpecialBehavior.CATCH_ODDS,
+        default=SpecialBehavior.FROM_LIST,
         help_text=(
             "How this crate decides whether to give a special. "
             "'No specials': never gives one. "
-            "'Pick from the list': gives one of the specials below, each equally likely. "
-            "'Pick from the list using catch odds': picks from the specials below "
-            "using the same chances as catching a ball."
+            "'Pick from the list': gives one of the specials below, weighted by rarity if enabled. "
+            "'Pick from the list using catch odds': rolls using the same chances as catching a ball, "
+            "limited to the specials below (any special if the list is empty)."
         ),
     )
 
     specials = models.ManyToManyField(
-        Special,
-        blank=True,
-        help_text=(
-            "The specials that can be given. "
-            "If blank, specials will be chosen at random with the same algorithm used when catching a ball."
-        ),
+        Special, blank=True, help_text="The specials this crate can give. Ignored if the behavior is 'No specials'."
     )
 
     respect_ball_rarity = models.BooleanField(
         default=False,
         help_text=(
-            "If enabled, balls in the 'rewards' field are weighted by rarity when one is randomly selected, "
-            "instead of each having an equal chance."
+            "If enabled, balls in the 'reward' and 'reward_groups' fields are weighted by rarity "
+            "when one is randomly selected, instead of each having an equal chance."
         ),
     )
 
